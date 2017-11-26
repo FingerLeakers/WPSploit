@@ -1,4 +1,4 @@
-## WPSploit - WordPress Plugin Security Testing 
+## WPSploit - WordPress Plugin Code Scanner
 
 This tool is intended for Penetration Testers who audit WordPress plugins or developers who wish to audit their own WordPress plugins. For more info [click here](https://github.com/ethicalhack3r/wordpress_plugin_security_testing_cheat_sheet).
 
