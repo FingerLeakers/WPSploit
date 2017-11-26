@@ -14,6 +14,12 @@ or
 
 ```
 $ wget https://raw.githubusercontent.com/m4ll0k/wp_sploit/master/wpsploit.py
-$ python wp_sploit.py plugin_file.php
+$ python wpsploit.py plugin_file.php
 ```
 
+## Example
+
+```
+$ wget https://plugins.svn.wordpress.org/analytics-for-woocommerce-by-customerio/trunk/admin/class-wccustomerio-admin.php
+$ python wpsploit.py class-wccustomerio-admin.php
+```
