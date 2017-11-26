@@ -8,5 +8,12 @@ This tool is intended for Penetration Testers who audit WordPress plugins or dev
 ```
 $ git clone https://github.com/m4ll0k/wp_sploit.git
 $ cd wp_sploit
-$ python wpseku.py plugin_file.php
+$ python wp_sploit.py plugin_file.php
 ```
+or
+
+```
+$ wget https://raw.githubusercontent.com/m4ll0k/wp_sploit/master/wp_sploit.py
+$ python wp_sploit.py plugin_file.php
+```
+
