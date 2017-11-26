@@ -1,2 +1,2 @@
-# wp_sploit
-WordPress Plugin Security Testing 
+# WPSploit - WordPress Plugin Security Testing 
+Testing wordpress plugins common errors
