@@ -12,28 +12,48 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import re 
+import os
 import sys
+import re
+import glob
+import fnmatch
 
 # https://github.com/ethicalhack3r/wordpress_plugin_security_testing_cheat_sheet
 
 class wpsploit(object):
 	def main(self):
+		self.banner()
+		if len(sys.argv) <= 1:
+			self.usage()
+
+		source = sys.argv[1]
+
+		# Recursively test all files
+		if os.path.isdir(source):
+			files = self.recursiveRead(source, '*.php')
+			for file in files:
+				self.testFile(file)
+
+		# Test single file
+		else:
+			file = self.control(source)
+			self.testFile(file)
+
+	# Test file against common vulnerabilities
+	def testFile(self,path):
+		print("Testing file: {}".format(path))
 		try:
-			if len(sys.argv) <= 1:
-				self.usage()
-			self.banner()
-			code = self.readfile( self.control( sys.argv[1] ) )
-			self.xss( code )
-			self.sql( code )
-			self.fid( code )
-			self.fin( code )
-			self.php( code )
-			self.com( code )
-			self.pce( code )
-			self.ope( code )
-			self.csrf( code )
-		except Exception,e:
+			code = self.readfile(path)
+			self.xss(code)
+			self.sql(code)
+			self.fid(code)
+			self.fin(code)
+			self.php(code)
+			self.com(code)
+			self.pce(code)
+			self.ope(code)
+			self.csrf(code)
+		except Exception as e:
 			raise
 
 	def csrf(self,code):
@@ -62,7 +82,7 @@ class wpsploit(object):
 			for cd in code:
 				pattern = re.findall( bl,cd,re.I )
 				if pattern != []:
-					print "\t{}- Possibile PHP Command Execution{} ==> {}{}{}".format( "\033[1;34m","\033[0m","\033[1;31m",pattern[0],"\033[0m" ) 
+					print "\t{}- Possibile PHP Command Execution{} ==> {}{}{}".format( "\033[1;34m","\033[0m","\033[1;31m",pattern[0],"\033[0m" )
 
 	def com(self,code):
 		# check command execution
@@ -127,7 +147,7 @@ class wpsploit(object):
 
 	def control(self,filename):
 		if not filename.endswith( '.php' ):
-			self.usage( )
+			self.usage()
 		else:
 			return filename
 
@@ -142,13 +162,19 @@ class wpsploit(object):
 		except IOError,e:
 			raise
 
+	def recursiveRead(self,rootdir,pattern):
+		matches = []
+		for root, dirnames, filenames in os.walk(rootdir):
+			for filename in fnmatch.filter(filenames, pattern):
+				matches.append(os.path.join(root, filename))
+		return matches
+
 	def usage(self):
-		self.banner()
 		msg = "# python %s plugintest.php"%(sys.argv[0])
 		msg += "\n"
 		print ( msg )
 		exit( )
-	
+
 	def banner(self):
 		lin = "#"
 		msg = "\n"
