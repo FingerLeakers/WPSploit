@@ -17,7 +17,6 @@ import sys
 import re
 import glob
 import fnmatch
-import json
 
 class colors(object):
     RED = "\033[1;31m"
